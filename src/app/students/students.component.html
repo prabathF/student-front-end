@@ -1,0 +1,52 @@
+<app-update (update)="loadGridItems()"></app-update>
+<app-upload></app-upload>
+<kendo-grid
+  [data]="gridItems"
+  [pageSize]="pageSize"
+  [skip]="skip"
+  [pageable]="true"
+  (pageChange)="pageChange($event)"
+>
+  <ng-template kendoGridToolbarTemplate>
+    <kendo-grid-spacer></kendo-grid-spacer>
+    <button kendoGridExcelCommand type="button" [svgIcon]="excelSVG">
+      Export to Excel
+    </button>
+  </ng-template>
+  <kendo-grid-column field="name" title="Full name"></kendo-grid-column>
+  <kendo-grid-column field="email" title="Email"></kendo-grid-column>
+  <kendo-grid-column title="Birth Date">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ dataItem.birthDate | date : "MM/dd/yyyy" }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="age" title="Age"></kendo-grid-column>
+  <kendo-grid-column title="Actions">
+    <ng-template kendoGridCellTemplate let-student>
+      <button
+        kendoButton
+        [svgIcon]="trashIcon"
+        themeColor="primary"
+        (click)="deleteStudent(student)"
+      ></button>
+      <button
+        kendoButton
+        style="margin: 2%"
+        [svgIcon]="editToolsIcon"
+        themeColor="secondary"
+        (click)="update(student)"
+      ></button>
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-excel fileName="Students.xlsx"></kendo-grid-excel>
+</kendo-grid>
+
+<kendo-dialog *ngIf="selectedStudent" [minWidth]="250" [width]="450">
+  <p style="margin: 30px; text-align: center">
+    Are you sure you want to delete student?
+  </p>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="close('no')">No</button>
+    <button kendoButton (click)="close('yes')" themeColor="primary">Yes</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

@@ -1,0 +1,32 @@
+<div class="example">
+  <form
+    class="k-form k-form-md"
+    [formGroup]="form"
+    novalidate
+    (ngSubmit)="save(form.valid)"
+  >
+    <kendo-formfield>
+      <kendo-label [for]="label" text="Upload Student csv here"></kendo-label>
+      <kendo-fileselect
+        #label
+        formControlName="file"
+        [multiple]="false"
+        [restrictions]="restrictions"
+      ></kendo-fileselect>
+      <kendo-formerror
+        *ngIf="submitted && form.controls['file']?.errors?.['required']"
+      >
+        Error: Uploading file is required
+      </kendo-formerror>
+    </kendo-formfield>
+
+    <button
+      type="submit"
+      kendoButton
+      themeColor="secondary"
+      style="margin: 1em 0"
+    >
+      Submit
+    </button>
+  </form>
+</div>

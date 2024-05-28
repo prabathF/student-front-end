@@ -1,0 +1,68 @@
+<kendo-window
+  *ngIf="opened"
+  title="Please provide additional data"
+  (close)="close()"
+  [minWidth]="250"
+  [width]="450"
+>
+  <form class="k-form" [formGroup]="form">
+    <fieldset>
+      <legend>Student Details</legend>
+
+      <label class="k-form-field">
+        <span>Name</span>
+        <kendo-textbox
+          placeholder="Name"
+          formControlName="name"
+        ></kendo-textbox>
+        <kendo-formerror
+          *ngIf="form.controls['name']?.touched && form.controls['name']?.errors?.['required']"
+        >
+          Error: Name is required
+        </kendo-formerror>
+      </label>
+      <label class="k-form-field">
+        <span>Email</span>
+        <kendo-textbox
+          placeholder="Email"
+          formControlName="email"
+        ></kendo-textbox>
+        <kendo-formerror
+          *ngIf="form.controls['email']?.touched && form.controls['email']?.errors?.['required']"
+        >
+          Error: Email is required
+        </kendo-formerror>
+        <kendo-formerror
+          *ngIf="form.controls['email']?.touched && form.controls['email']?.errors?.['email']"
+        >
+          Error: Invalid Email
+        </kendo-formerror>
+      </label>
+      <label class="k-form-field">
+        <span>Birth Date</span>
+        <kendo-datepicker
+          [disabledDates]="disabledDates"
+          calendarType="classic"
+          formControlName="birthDate"
+        ></kendo-datepicker>
+        <kendo-formerror
+          *ngIf="form.controls['birthDate']?.touched && form.controls['birthDate']?.errors?.['required']"
+        >
+          Error: Birth Date is required
+        </kendo-formerror>
+        <kendo-formerror
+          *ngIf="form.controls['birthDate']?.touched && form.controls['birthDate']?.errors && !form.controls['birthDate']?.errors?.['required']"
+        >
+          Error: Invalid Birth Date
+        </kendo-formerror>
+      </label>
+    </fieldset>
+
+    <div class="k-actions k-actions-end">
+      <button kendoButton type="button" (click)="close()">Cancel</button>
+      <button kendoButton themeColor="primary" type="button" (click)="submit()">
+        Submit
+      </button>
+    </div>
+  </form>
+</kendo-window>
